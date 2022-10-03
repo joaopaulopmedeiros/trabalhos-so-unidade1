@@ -1,11 +1,14 @@
 CC := gcc
 
-build: message compile	
+app: message build run
 
 message:
-	@echo "Hello, we're making things ready for ya..."
+	@echo Hello, we're making things ready for ya...
 
-compile: src/main.c
+build: src/main.c
 	$(CC) $^ -o $@
 
-reload: build
+run: 
+	./build
+
+reload: app

@@ -7,7 +7,7 @@ Trabalho desenvolvido para a unidade 01 de SO.
 Execução simples através de Makefile.
 
 ```
-make build
+make app
 ```
 
 ## Onde encontro o relatório
