@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdbool.h>
 #include <math.h>
+#include <time.h>
+#include <conio.h>
 
 /**
  * @brief
@@ -15,11 +17,13 @@ void insertMatrixIntoFile(int n, int m, char *path)
 {
   FILE *file = fopen(path, "w");
 
+  srand(time(NULL));
+
   for (size_t i = 0; i < n; i++)
   {
     for (size_t j = 0; j < m; j++)
     {
-      fprintf(file, "%s ", "1");
+      fprintf(file, "%c ", (rand() % 10) + '0');
     }
     fprintf(file, "\n");
   }
