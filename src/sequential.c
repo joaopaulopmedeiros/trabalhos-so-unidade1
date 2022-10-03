@@ -1,8 +1,23 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include <math.h>
+
+void extractMatrixFromFile(char *path)
+{
+    FILE *file = fopen(path, "r");
+    char ch;
+    int number = 0;
+
+    while ((ch = fgetc(file)) != EOF)
+    {
+        if (isdigit(ch))
+        {
+            printf("%c", ch);
+        }
+    }
+
+    fclose(file);
+}
 
 /**
  * @brief
@@ -14,6 +29,8 @@
  */
 int main(int argc, char **argv)
 {
-    printf("Running sequential approach");
+    printf("Running sequential approach\n");
+    extractMatrixFromFile(argv[1]);
+    // int **m2 = extractMatrixFromFile(argv[2]);
     return 0;
 }
