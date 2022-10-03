@@ -9,6 +9,6 @@ build: src/main.c
 	$(CC) $^ -o $@
 
 run: 
-	./build
+	./build 3 3 3 3
 
 reload: app
