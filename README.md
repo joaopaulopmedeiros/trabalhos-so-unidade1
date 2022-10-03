@@ -11,4 +11,4 @@ make app
 ```
 
 ## Onde encontro o relatório
-[Acesse aqui](./assets/relatorio_projeto.pdf)
+[Acesse aqui](./docs/relatorio.md)

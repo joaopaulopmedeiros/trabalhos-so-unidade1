@@ -1,14 +1,18 @@
 CC := gcc
 
-app: message build run
+app: message auxiliar sequential run
 
 message:
 	@echo Hello, we're making things ready for ya...
 
-build: src/main.c
+auxiliar: src/auxiliar.c
+	$(CC) $^ -o $@
+
+sequential: src/sequential.c
 	$(CC) $^ -o $@
 
 run: 
-	./build 3 3 3 3
+	./auxiliar 3 3 3 3
+	./sequential ./assets/M1.txt ./assets/M2.txt
 
 reload: app
