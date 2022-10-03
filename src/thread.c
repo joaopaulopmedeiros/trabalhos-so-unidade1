@@ -6,6 +6,6 @@
 
 int main(int argc, char **argv)
 {
-    printf("Running thread parallel approach\n");
+    // printf("Running thread parallel approach\n");
     return 0;
 }
