@@ -6,30 +6,26 @@ void extractMatrixFromFile(char *path)
 {
     FILE *file = fopen(path, "r");
     char ch;
-    int **matrix = malloc(sizeof(int **));
-    int currentLine, currentColumn, totalLines, totalColumns = 0;
+    int totalLines, totalColumns = 0;
+    int **matrix = malloc(sizeof(int *) * totalLines);
 
     while ((ch = fgetc(file)) != EOF)
     {
         if (isdigit(ch))
         {
-            currentColumn++;
-
-            if (currentLine == 0)
+            if (totalLines == 0)
             {
-                totalColumns = currentColumn;
+                totalColumns++;
             }
 
             printf("%c", ch);
         }
         else if (ch == '\n')
         {
-            currentLine++;
+            totalLines++;
             printf("\n");
         }
     }
-
-    totalLines = currentLine;
 
     printf("Total Lines: %d\n", totalLines);
     printf("Total Columns: %d\n", totalColumns);
