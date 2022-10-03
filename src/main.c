@@ -4,6 +4,13 @@
 #include <stdbool.h>
 #include <math.h>
 
+/**
+ * @brief
+ * Insere uma matriz em um arquivo
+ * @param n
+ * @param m
+ * @param path
+ */
 void insertMatrixIntoFile(int n, int m, char *path)
 {
   FILE *file = fopen(path, "w");
