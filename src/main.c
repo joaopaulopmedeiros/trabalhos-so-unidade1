@@ -3,6 +3,21 @@
 #include <string.h>
 #include <stdbool.h>
 #include <math.h>
+void insertMatrixIntoFile(int n, int m, char *path)
+{
+  FILE *file = fopen(path, "w");
+
+  for (size_t i = 0; i < n; i++)
+  {
+    for (size_t j = 0; j < m; j++)
+    {
+      fprintf(file, "%s ", "1");
+    }
+    fprintf(file, "\n");
+  }
+
+  fclose(file);
+}
 
 /**
  * @brief
@@ -28,6 +43,8 @@ int main(int argc, char **argv)
   m2 = atoi(argv[4]);
 
   printf("M1 is %dx%d\nM2 is %dx%d", n1, m1, n2, m2);
+
+  insertMatrixIntoFile(n1, m1, ".\\assets\\M1.txt");
 
   return 0;
 }
