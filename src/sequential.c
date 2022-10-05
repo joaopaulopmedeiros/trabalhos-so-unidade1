@@ -9,6 +9,24 @@
 
 /**
  * @brief
+ * checa se token é numererico
+ * @param token
+ * @return int
+ */
+int isNotEmpty(char *token)
+{
+    if (strcmp(token, " ") && strcmp(token, "\n"))
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+/**
+ * @brief
  * Extrai uma matriz de um arquivo dado o seu path
  * @param path
  * @return Matrix
@@ -28,70 +46,80 @@ Matrix extractMatrixFromFile(char *path)
     int currentMatrixRow = 0;
     int currentMatrixColumn = 0;
 
+    char *line = malloc(sizeof(char) * 10);
+
     int **matrix;
 
-    while ((ch = fgetc(file)) != EOF)
+    while (fgets(line, sizeof(line), file))
     {
-        // is file header
-        if (isReadingFileHeader)
+        char *token = strtok(line, " ");
+
+        while (token != NULL)
         {
-            if (isdigit(ch))
+            // is file header
+            if (isReadingFileHeader)
             {
-                // set dimensions
-                if (!totalMatrixRows)
+                if (isNotEmpty(token))
                 {
-                    totalMatrixRows = ch - '0';
+                    // set dimensions
+                    if (!totalMatrixRows)
+                    {
+                        totalMatrixRows = atoi(token);
+                    }
+
+                    if (!totalMatrixColumns)
+                    {
+                        totalMatrixColumns = atoi(token);
+                    }
+                }
+                else if (strcmp(token, "\n") == 0)
+                {
+                    isReadingFileHeader = 0;
+                }
+            } // is file body
+            else
+            {
+                // check wether dimensions have been specified
+                if (totalMatrixColumns <= 0 || totalMatrixRows <= 0)
+                {
+                    printf("Matrix must have a positive number of rows and columns");
+                    exit(EXIT_FAILURE);
                 }
 
-                if (!totalMatrixColumns)
+                // start mounting matrix in memory
+                if (!isMountingMatrix)
                 {
-                    totalMatrixColumns = ch - '0';
-                }
-            }
-            else if (ch == '\n')
-            {
-                isReadingFileHeader = 0;
-            }
-        } // is file body
-        else
-        {
-            // check wether dimensions have been specified
-            if (totalMatrixColumns <= 0 || totalMatrixRows <= 0)
-            {
-                printf("Matrix must have a positive number of rows and columns");
-                exit(EXIT_FAILURE);
-            }
+                    // dynamic memory allocation (heap)
+                    matrix = malloc(sizeof(int *) * totalMatrixRows);
 
-            // start mounting matrix in memory
-            if (!isMountingMatrix)
-            {
-                // dynamic memory allocation (heap)
-                matrix = malloc(sizeof(int *) * totalMatrixRows);
+                    for (int i = 0; i < totalMatrixRows; i++)
+                    {
+                        matrix[i] = malloc(sizeof(int) * totalMatrixColumns);
+                    }
 
-                for (int i = 0; i < totalMatrixRows; i++)
-                {
-                    matrix[i] = malloc(sizeof(int) * totalMatrixColumns);
+                    isMountingMatrix = 1;
+
+                    printf("Memory in heap is allocated\n");
                 }
 
-                isMountingMatrix = 1;
-
-                printf("Memory in heap is allocated\n");
+                // push item to matrix
+                if (isNotEmpty(token))
+                {
+                    matrix[currentMatrixRow][currentMatrixColumn] = atoi(token);
+                    currentMatrixColumn++;
+                }
+                else if (strcmp(token, "\n") == 0)
+                {
+                    currentMatrixRow++;
+                    currentMatrixColumn = 0;
+                }
             }
 
-            // push item to matrix
-            if (isdigit(ch))
-            {
-                matrix[currentMatrixRow][currentMatrixColumn] = ch - '0';
-                currentMatrixColumn++;
-            }
-            else if (ch == '\n')
-            {
-                currentMatrixRow++;
-                currentMatrixColumn = 0;
-            }
+            token = strtok(NULL, " ");
         }
     }
 
+    free(line);
     fclose(file);
 
     Matrix m;
