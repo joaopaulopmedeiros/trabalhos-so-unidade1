@@ -5,8 +5,9 @@
 #include <stdbool.h>
 #include <math.h>
 #include <time.h>
+#include "matrix.h"
 
-void extractMatrixFromFile(char *path)
+Matrix extractMatrixFromFile(char *path)
 {
     FILE *file = fopen(path, "r");
 
@@ -85,21 +86,15 @@ void extractMatrixFromFile(char *path)
         }
     }
 
-    for (size_t i = 0; i < totalMatrixRows; i++)
-    {
-        for (size_t j = 0; j < totalMatrixColumns; j++)
-        {
-            printf("%d ", matrix[i][j]);
-        }
-        printf("\n");
-    }
-
-    free(matrix);
-
-    printf("Total Rows: %d\n", totalMatrixRows);
-    printf("Total Columns: %d\n", totalMatrixColumns);
-
     fclose(file);
+
+    Matrix m;
+
+    m.totalColumns = totalMatrixColumns;
+    m.totalRows = totalMatrixRows;
+    m.items = matrix;
+
+    return m;
 }
 
 /**
@@ -112,8 +107,29 @@ void extractMatrixFromFile(char *path)
  */
 int main(int argc, char **argv)
 {
-    printf("Running sequential approach\n");
-    extractMatrixFromFile(argv[1]);
+    printf("Running sequential script\n");
+
+    Matrix m1 = extractMatrixFromFile(argv[1]);
+
+    for (size_t i = 0; i < m1.totalRows; i++)
+    {
+        for (size_t j = 0; j < m1.totalColumns; j++)
+        {
+            printf("%d ", m1.items[i][j]);
+        }
+        printf("\n");
+    }
+
+    printf("Cleaning up\n");
+
+    for (int i = 0; i < m1.totalRows; i++)
+    {
+        free(m1.items[i]);
+    }
+
+    free(m1.items);
+
+    printf("Sequential script's done\n");
     // int **m2 = extractMatrixFromFile(argv[2]);
     return 0;
 }
