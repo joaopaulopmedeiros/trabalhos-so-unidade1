@@ -150,6 +150,21 @@ void saveMatrixMultiplicationResultIntoFile(Matrix m1, Matrix m2, char *path, cl
 
     fprintf(file, "%d %d\n", m1.totalRows, m2.totalColumns);
 
+    for (int i = 0; i < m1.totalRows; i++)
+    {
+        for (int j = 0; j < m2.totalColumns; j++)
+        {
+            int sum = 0;
+
+            for (int k = 0; k < m2.totalRows; k++)
+            {
+                sum += m1.items[i][k] * m2.items[k][j];
+            }
+
+            fprintf(file, "c%d%d %d\n", i + 1, j + 1, sum);
+        }
+    }
+
     clock_t finishedAt = clock();
 
     double timeSpent = (double)(finishedAt - startedAt) / CLOCKS_PER_SEC;
