@@ -18,7 +18,7 @@ thread: src/thread.c
 	$(CC) $^ -o $@
 
 run: 
-	./auxiliar 50 50 50 50
+	./auxiliar 100 100 100 100
 	./sequential ./assets/M1.txt ./assets/M2.txt
 	./process ./assets/M1.txt ./assets/M2.txt
 	./thread ./assets/M1.txt ./assets/M2.txt
