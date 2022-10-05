@@ -48,6 +48,7 @@ void extractMatrixFromFile(char *path)
         } // is file body
         else
         {
+            // check wether dimensions have been specified
             if (totalMatrixColumns <= 0 || totalMatrixRows <= 0)
             {
                 printf("Matrix must have a positive number of rows and columns");
@@ -66,23 +67,31 @@ void extractMatrixFromFile(char *path)
                 }
 
                 isMountingMatrix = 1;
+
                 printf("Memory in heap is allocated\n");
             }
-            else
+
+            // push item to matrix
+            if (isdigit(ch))
             {
-                // push item to matrix
-                if (isdigit(ch))
-                {
-                    matrix[currentMatrixRow][currentMatrixColumn] = ch - '0';
-                    currentMatrixColumn++;
-                }
-                else if (ch == '\n')
-                {
-                    currentMatrixRow++;
-                    currentMatrixColumn = 0;
-                }
+                matrix[currentMatrixRow][currentMatrixColumn] = ch - '0';
+                currentMatrixColumn++;
+            }
+            else if (ch == '\n')
+            {
+                currentMatrixRow++;
+                currentMatrixColumn = 0;
             }
         }
+    }
+
+    for (size_t i = 0; i < totalMatrixRows; i++)
+    {
+        for (size_t j = 0; j < totalMatrixColumns; j++)
+        {
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\n");
     }
 
     free(matrix);
