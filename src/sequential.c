@@ -135,6 +135,13 @@ void cleanMatrix(Matrix m)
     free(m.items);
 }
 
+void saveMatrixMultiplicationResultIntoFile(Matrix m1, Matrix m2, char *path)
+{
+    FILE *file = fopen(path, "w");
+    fprintf(file, "%d %d\n", m1.totalRows, m2.totalColumns);
+    fclose(file);
+}
+
 /**
  * @brief
  * Um programa que recebe como entrada dois arquivos que
@@ -154,6 +161,8 @@ int main(int argc, char **argv)
     Matrix m2 = extractMatrixFromFile(argv[2]);
     printf("M2\n");
     printMatrix(m2);
+
+    saveMatrixMultiplicationResultIntoFile(m1, m2, ".\\assets\\m_result_seq.txt");
 
     printf("Cleaning up\n");
     cleanMatrix(m1);
