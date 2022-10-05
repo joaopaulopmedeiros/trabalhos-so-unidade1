@@ -135,10 +135,27 @@ void cleanMatrix(Matrix m)
     free(m.items);
 }
 
-void saveMatrixMultiplicationResultIntoFile(Matrix m1, Matrix m2, char *path)
+/**
+ * @brief
+ * Salva resultado da multiplicação de duas matrizes com abordagem sequencial.
+ * Adiciona no cabeçalho as dimensões e no rodapé o tempo gasto na execução do programa
+ * @param m1
+ * @param m2
+ * @param path
+ * @param startedAt
+ */
+void saveMatrixMultiplicationResultIntoFile(Matrix m1, Matrix m2, char *path, clock_t startedAt)
 {
     FILE *file = fopen(path, "w");
+
     fprintf(file, "%d %d\n", m1.totalRows, m2.totalColumns);
+
+    clock_t finishedAt = clock();
+
+    double timeSpent = (double)(finishedAt - startedAt) / CLOCKS_PER_SEC;
+
+    fprintf(file, "%f", timeSpent);
+
     fclose(file);
 }
 
@@ -154,6 +171,8 @@ int main(int argc, char **argv)
 {
     printf("Running sequential script\n");
 
+    clock_t startedAt = clock();
+
     Matrix m1 = extractMatrixFromFile(argv[1]);
     printf("M1\n");
     printMatrix(m1);
@@ -162,7 +181,7 @@ int main(int argc, char **argv)
     printf("M2\n");
     printMatrix(m2);
 
-    saveMatrixMultiplicationResultIntoFile(m1, m2, ".\\assets\\m_result_seq.txt");
+    saveMatrixMultiplicationResultIntoFile(m1, m2, ".\\assets\\m_result_seq.txt", startedAt);
 
     printf("Cleaning up\n");
     cleanMatrix(m1);
