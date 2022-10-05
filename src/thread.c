@@ -10,6 +10,8 @@
 void *runThread(void *tid)
 {
     printf("Hello. I'm thread n%d\n", (int)(size_t)tid);
+    sleep(((int)(size_t)tid + 1) * 2);
+    pthread_exit(NULL);
 }
 
 /**
@@ -58,7 +60,7 @@ int main(int argc, char **argv)
     cleanMatrix(m1);
     cleanMatrix(m2);
 
-    printf("Thread parallel  script's done\n");
+    printf("Thread parallel script's done\n");
 
     return 0;
 }
