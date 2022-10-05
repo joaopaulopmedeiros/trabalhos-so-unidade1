@@ -97,6 +97,28 @@ Matrix extractMatrixFromFile(char *path)
     return m;
 }
 
+void printMatrix(Matrix m)
+{
+    for (size_t i = 0; i < m.totalRows; i++)
+    {
+        for (size_t j = 0; j < m.totalColumns; j++)
+        {
+            printf("%d ", m.items[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void cleanMatrix(Matrix m)
+{
+    for (int i = 0; i < m.totalRows; i++)
+    {
+        free(m.items[i]);
+    }
+
+    free(m.items);
+}
+
 /**
  * @brief
  * Um programa que recebe como entrada dois arquivos que
@@ -110,26 +132,17 @@ int main(int argc, char **argv)
     printf("Running sequential script\n");
 
     Matrix m1 = extractMatrixFromFile(argv[1]);
+    printf("M1\n");
+    printMatrix(m1);
 
-    for (size_t i = 0; i < m1.totalRows; i++)
-    {
-        for (size_t j = 0; j < m1.totalColumns; j++)
-        {
-            printf("%d ", m1.items[i][j]);
-        }
-        printf("\n");
-    }
+    Matrix m2 = extractMatrixFromFile(argv[2]);
+    printf("M2\n");
+    printMatrix(m2);
 
     printf("Cleaning up\n");
-
-    for (int i = 0; i < m1.totalRows; i++)
-    {
-        free(m1.items[i]);
-    }
-
-    free(m1.items);
+    cleanMatrix(m1);
+    cleanMatrix(m2);
 
     printf("Sequential script's done\n");
-    // int **m2 = extractMatrixFromFile(argv[2]);
     return 0;
 }
