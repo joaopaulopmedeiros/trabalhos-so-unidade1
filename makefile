@@ -18,9 +18,9 @@ thread: src/thread.c
 	$(CC) $^ -o $@
 
 run: 
-	./auxiliar 100 100 100 100
+	./auxiliar 10 10 10 10
 	./sequential ./assets/M1.txt ./assets/M2.txt
-	./process ./assets/M1.txt ./assets/M2.txt
-	./thread ./assets/M1.txt ./assets/M2.txt
+	./process ./assets/M1.txt ./assets/M2.txt 10
+	./thread ./assets/M1.txt ./assets/M2.txt 10
 
 reload: app
