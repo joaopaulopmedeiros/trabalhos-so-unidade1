@@ -1,37 +1,51 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include <math.h>
+#include <time.h>
 
 void extractMatrixFromFile(char *path)
 {
     FILE *file = fopen(path, "r");
     char ch;
-    int totalLines, totalColumns = 0;
-    int **matrix = malloc(sizeof(int *) * totalLines);
+    int isReadingFileHeader = 1;
+    int totalMatrixRows = 0;
+    int totalMatrixColumns = 0;
 
     while ((ch = fgetc(file)) != EOF)
     {
-        if (isdigit(ch))
+        // is file header
+        if (isReadingFileHeader)
         {
-            if (totalLines == 0)
+            if (isdigit(ch))
             {
-                totalColumns++;
-            }
+                // set dimensions
+                if (!totalMatrixRows)
+                {
+                    totalMatrixRows = ch - '0';
+                }
 
-            printf("%c", ch);
-        }
-        else if (ch == '\n')
+                if (!totalMatrixColumns)
+                {
+                    totalMatrixColumns = ch - '0';
+                }
+            }
+            else if (ch == '\n')
+            {
+                isReadingFileHeader = 0;
+            }
+        } // is file body
+        else
         {
-            totalLines++;
-            printf("\n");
         }
     }
 
-    printf("Total Lines: %d\n", totalLines);
-    printf("Total Columns: %d\n", totalColumns);
+    printf("Total Rows: %d\n", totalMatrixRows);
+    printf("Total Columns: %d\n", totalMatrixColumns);
 
     fclose(file);
-    free(matrix);
 }
 
 /**

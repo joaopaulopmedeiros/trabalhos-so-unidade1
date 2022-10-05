@@ -16,6 +16,8 @@ void insertMatrixIntoFile(int n, int m, char *path)
 {
   FILE *file = fopen(path, "w");
 
+  fprintf(file, "%d %d\n", n, m);
+
   srand(time(NULL));
 
   for (size_t i = 0; i < n; i++)
