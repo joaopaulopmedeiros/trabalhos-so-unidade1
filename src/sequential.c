@@ -66,7 +66,6 @@ int main(int argc, char **argv)
     saveMatrixMultiplicationResultIntoFile(m1, m2, ".\\assets\\m_result_seq.txt");
 
     cleanMatrix(m1);
-
     cleanMatrix(m2);
 
     printf("Sequential script's done\n");
