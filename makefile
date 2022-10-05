@@ -20,7 +20,7 @@ thread: src/thread.c
 run: 
 	./auxiliar 10 10 10 10
 	./sequential ./assets/M1.txt ./assets/M2.txt
-	./process ./assets/M1.txt ./assets/M2.txt 10
 	./thread ./assets/M1.txt ./assets/M2.txt 10
+	./process ./assets/M1.txt ./assets/M2.txt 10
 
 reload: app
