@@ -9,7 +9,7 @@
 
 /**
  * @brief
- * Extrai uma matrix de um arquivo dado o seu path
+ * Extrai uma matriz de um arquivo dado o seu path
  * @param path
  * @return Matrix
  */
