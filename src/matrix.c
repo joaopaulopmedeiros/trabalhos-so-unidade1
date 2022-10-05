@@ -98,8 +98,6 @@ Matrix extractMatrixFromFile(char *path)
                     }
 
                     isMountingMatrix = 1;
-
-                    printf("Memory in heap is allocated\n");
                 }
 
                 // push item to matrix

@@ -16,8 +16,10 @@
  * @param path
  * @param startedAt
  */
-void saveMatrixMultiplicationResultIntoFile(Matrix m1, Matrix m2, char *path, clock_t startedAt)
+void saveMatrixMultiplicationResultIntoFile(Matrix m1, Matrix m2, char *path)
 {
+    clock_t startedAt = clock();
+
     FILE *file = fopen(path, "w");
 
     fprintf(file, "%d %d\n", m1.totalRows, m2.totalColumns);
@@ -58,22 +60,16 @@ int main(int argc, char **argv)
 {
     printf("Running sequential script\n");
 
-    clock_t startedAt = clock();
-
     Matrix m1 = extractMatrixFromFile(argv[1]);
-    printf("M1\n");
-    printMatrix(m1);
-
     Matrix m2 = extractMatrixFromFile(argv[2]);
-    printf("M2\n");
-    printMatrix(m2);
 
-    saveMatrixMultiplicationResultIntoFile(m1, m2, ".\\assets\\m_result_seq.txt", startedAt);
+    saveMatrixMultiplicationResultIntoFile(m1, m2, ".\\assets\\m_result_seq.txt");
 
-    printf("Cleaning up\n");
     cleanMatrix(m1);
+
     cleanMatrix(m2);
 
     printf("Sequential script's done\n");
+
     return 0;
 }
