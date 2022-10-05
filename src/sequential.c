@@ -7,6 +7,12 @@
 #include <time.h>
 #include "matrix.h"
 
+/**
+ * @brief
+ * Extrai uma matrix de um arquivo dado o seu path
+ * @param path
+ * @return Matrix
+ */
 Matrix extractMatrixFromFile(char *path)
 {
     FILE *file = fopen(path, "r");
@@ -97,6 +103,11 @@ Matrix extractMatrixFromFile(char *path)
     return m;
 }
 
+/**
+ * @brief
+ * Exibe matriz em terminal
+ * @param m
+ */
 void printMatrix(Matrix m)
 {
     for (size_t i = 0; i < m.totalRows; i++)
@@ -109,6 +120,11 @@ void printMatrix(Matrix m)
     }
 }
 
+/**
+ * @brief
+ * Limpa matriz da memória heap
+ * @param m
+ */
 void cleanMatrix(Matrix m)
 {
     for (int i = 0; i < m.totalRows; i++)
