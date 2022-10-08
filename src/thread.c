@@ -32,12 +32,12 @@ int main(int argc, char **argv)
 
     Matrix m1 = extractMatrixFromFile(argv[1]);
     Matrix m2 = extractMatrixFromFile(argv[2]);
-    int p = atoi(argv[3]);
+    int itemsPerThread = atoi(argv[3]);
 
-    int numberOfThreads = m1.totalRows * m2.totalColumns / p;
+    int numberOfThreads = m1.totalRows * m2.totalColumns / itemsPerThread;
     pthread_t threads[numberOfThreads];
-    int status;
     void *threadReturn;
+    int status = 0;
 
     for (size_t i = 0; i < numberOfThreads; i++)
     {
@@ -46,6 +46,8 @@ int main(int argc, char **argv)
         if (status != 0)
         {
             printf("Error on attempt to create thread. Code: %d\n", status);
+            cleanMatrix(m1);
+            cleanMatrix(m2);
             exit(EXIT_FAILURE);
         }
     }
