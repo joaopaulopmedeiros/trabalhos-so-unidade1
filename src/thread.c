@@ -7,10 +7,21 @@
 #include <pthread.h>
 #include "matrix.c"
 
-void *runThread(void *tid)
+typedef struct
 {
-    printf("Hello. I'm thread n%d\n", (int)(size_t)tid);
-    sleep(((int)(size_t)tid + 1) * 2);
+    Matrix *m1;
+    Matrix *m2;
+    int currentLine;
+    int currentColumn;
+} MatrixDto;
+
+void *runThread(void *arg)
+{
+    MatrixDto *dto = (MatrixDto *)arg;
+
+    printf("current line %d\n", dto->currentLine);
+    // printf("Hello. I'm thread n%d\n", (int)(size_t)dto->currentLine);
+    // sleep(((int)(size_t)dto->currentLine + 1) * 2);
     pthread_exit(NULL);
 }
 
@@ -42,7 +53,15 @@ int main(int argc, char **argv)
     for (size_t i = 0; i < numberOfThreads; i++)
     {
         printf("Main process creating thread n%d\n", i);
-        status = pthread_create(&threads[i], NULL, runThread, (void *)i);
+
+        MatrixDto dto;
+        dto.currentLine = 1;
+        dto.currentColumn = 2;
+        dto.m1 = &m1;
+        dto.m2 = &m2;
+
+        status = pthread_create(&threads[i], NULL, runThread, &dto);
+
         if (status != 0)
         {
             printf("Error on attempt to create thread. Code: %d\n", status);
